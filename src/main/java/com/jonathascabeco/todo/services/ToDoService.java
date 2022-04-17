@@ -8,23 +8,25 @@ import org.springframework.stereotype.Service;
 
 import com.jonathascabeco.todo.domain.Todo;
 import com.jonathascabeco.todo.repositories.ToDoRepository;
+import com.jonathascabeco.todo.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class ToDoService {
 
 	@Autowired
 	private ToDoRepository repo;
-	
+
 	public Todo findById(Integer id) {
 		Optional<Todo> obj = repo.findById(id);
-		return obj.orElse(null);
+		return obj.orElseThrow(
+				() -> new ObjectNotFoundException("Object not found! Id: " + id + ", Type: " + Todo.class.getName()));
 	}
 
 	public List<Todo> findAllOpen() {
 		List<Todo> list = repo.findAllOpen();
 		return list;
 	}
-	
+
 	public List<Todo> findAllClosed() {
 		List<Todo> list = repo.findAllClosed();
 		return list;
@@ -36,11 +38,11 @@ public class ToDoService {
 	}
 
 	public Todo created(Todo obj) {
-		obj.setId(null);//medida de segurança caso o usuário coloque um id;
+		obj.setId(null);// medida de segurança caso o usuário coloque um id;
 		return repo.save(obj);
 	}
 
 	public void delete(Integer id) {
-		repo.deleteById(id);		
-	}	
+		repo.deleteById(id);
+	}
 }
