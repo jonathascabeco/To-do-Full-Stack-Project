@@ -1,0 +1,21 @@
+package com.jonathascabeco.todo.services;
+
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.jonathascabeco.todo.domain.Todo;
+import com.jonathascabeco.todo.repositories.ToDoRepository;
+
+@Service
+public class ToDoService {
+
+	@Autowired
+	private ToDoRepository repo;
+	
+	public Todo findById(Integer id) {
+		Optional<Todo> obj = repo.findById(id);
+		return obj.orElse(null);
+	}
+}
