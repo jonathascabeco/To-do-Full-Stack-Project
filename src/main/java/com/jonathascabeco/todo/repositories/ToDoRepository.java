@@ -17,4 +17,7 @@ public interface ToDoRepository extends JpaRepository<Todo, Integer> {
 	// estava com dois pontos no false e deu erro; os dois pontos é utilizado como parametro um valor
 	// nesse caso, está apenas sendo validade se ele é verdadeiro ou falso, ou seja, nao há necessidade;
 	List<Todo> findAllOpen();
+	
+	@Query("SELECT obj FROM Todo obj WHERE obj.finished = true ORDER BY dateFinal ASC")
+	List<Todo> findAllClosed();
 }
