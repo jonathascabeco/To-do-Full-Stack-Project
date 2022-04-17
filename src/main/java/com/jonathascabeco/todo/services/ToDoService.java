@@ -38,5 +38,9 @@ public class ToDoService {
 	public Todo created(Todo obj) {
 		obj.setId(null);//medida de segurança caso o usuário coloque um id;
 		return repo.save(obj);
+	}
+
+	public void delete(Integer id) {
+		repo.deleteById(id);		
 	}	
 }
