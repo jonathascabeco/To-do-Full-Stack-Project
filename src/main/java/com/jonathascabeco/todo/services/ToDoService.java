@@ -34,4 +34,9 @@ public class ToDoService {
 		List<Todo> list = repo.findAll();
 		return list;
 	}
+
+	public Todo created(Todo obj) {
+		obj.setId(null);//medida de segurança caso o usuário coloque um id;
+		return repo.save(obj);
+	}	
 }
